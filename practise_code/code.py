@@ -59,3 +59,14 @@ def powerInLogarithmicTime(x,n):
   else:
     return x*result*result
 print(powerInLogarithmicTime(2,5))
+
+# ---------------------------------------------------------------------------- #
+#                                tower of hanoi                                #
+# ---------------------------------------------------------------------------- #
+def towerOfHanoi(numberOfDiscs,source,destination,helper):
+  if(numberOfDiscs==0):
+    return
+  towerOfHanoi(numberOfDiscs-1,source,helper,destination)
+  print('Move disc:{} from tower->{} to tower-{}'.format(numberOfDiscs,source,destination))
+  towerOfHanoi(numberOfDiscs-1,helper,destination,source)
+towerOfHanoi(3,'A','B','C')
