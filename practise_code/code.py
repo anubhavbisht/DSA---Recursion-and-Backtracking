@@ -70,3 +70,77 @@ def towerOfHanoi(numberOfDiscs,source,destination,helper):
   print('Move disc:{} from tower->{} to tower-{}'.format(numberOfDiscs,source,destination))
   towerOfHanoi(numberOfDiscs-1,helper,destination,source)
 towerOfHanoi(3,'A','B','C')
+
+# ---------------------------------------------------------------------------- #
+#                           display contents of array                          #
+# ---------------------------------------------------------------------------- #
+def displayArray(array,index):
+  if(index==len(array)):
+    return
+  print(array[index])
+  displayArray(array,index+1)
+array = [1,3,4,5,2]
+displayArray(array,0)
+
+# ---------------------------------------------------------------------------- #
+#                     display contents of array in reverse                     #
+# ---------------------------------------------------------------------------- #
+def displayArrayInReverse(array,index):
+  if(index==len(array)):
+    return
+  displayArrayInReverse(array,index+1)
+  print(array[index])
+array = [1,3,4,5,2]
+displayArrayInReverse(array,0)
+
+# ---------------------------------------------------------------------------- #
+#                              maximum of an array                             #
+# ---------------------------------------------------------------------------- #
+def maxOfArray(array,index):
+  if(index==len(array)):
+    return float('-inf')
+  result = maxOfArray(array, index+1)
+  if(result>array[index]):
+    return result
+  return array[index]
+array = [-1,-3,-4,-5,-2]
+print(maxOfArray(array,0))
+
+# ---------------------------------------------------------------------------- #
+#                           first index of occurrence                          #
+# ---------------------------------------------------------------------------- #
+def firstOccurrence(array,index,data):
+  if(index==len(array)):
+    return -1
+  result = firstOccurrence(array, index+1,data)
+  if(array[index]==data):
+    return index
+  return result
+array = [2,3,6,9,8,1,4,5,8,0,8]
+print(firstOccurrence(array,0,8))
+
+# ---------------------------------------------------------------------------- #
+#                  optimised way -> first index of occurrence                  #
+# ---------------------------------------------------------------------------- #
+def firstOccurrence(array,index,data):
+  if(index==len(array)):
+    return -1
+  if(array[index]==data):
+    return index
+  result = firstOccurrence(array, index+1,data)
+  return result
+array = [2,3,6,9,8,1,4,5,8,0,8]
+print(firstOccurrence(array,0,8))
+
+# ---------------------------------------------------------------------------- #
+#                           last index of occurrence                           #
+# ---------------------------------------------------------------------------- #
+def lastOccurrence(array,index,data):
+  if(index==len(array)):
+    return -1
+  result = lastOccurrence(array, index+1,data)
+  if(array[index]==data and result==-1):
+    return index
+  return result
+array = [2,3,6,9,8,1,4,5,8,3,8]
+print(lastOccurrence(array,0,3))
