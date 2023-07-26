@@ -144,3 +144,69 @@ def lastOccurrence(array,index,data):
   return result
 array = [2,3,6,9,8,1,4,5,8,3,8]
 print(lastOccurrence(array,0,3))
+
+# ---------------------------------------------------------------------------- #
+#                             all indices in array                             #
+# ---------------------------------------------------------------------------- #
+def allOccurrences(array,data,currentIndex):
+  if(currentIndex==len(array)):
+    return []
+  occurencesArray = allOccurrences(array,data,currentIndex+1)
+  if(array[currentIndex]==data):
+    occurencesArray.append(currentIndex)
+  return occurencesArray
+    
+array = [2,3,6,9,3,8,1,4,5,8,3,8]
+print(allOccurrences(array,3,0))
+
+# ---------------------------------------------------------------------------- #
+#                       get all subsequences of a string                       #
+# ---------------------------------------------------------------------------- #
+string = "abc"
+subsequences = ['']
+for i in range(len(string)):
+  newSubsequences = subsequences
+  for j in range(len(subsequences)):
+    newString = subsequences[j]+string[i]
+    newSubsequences.append(newString)
+  subsequences = newSubsequences
+print(subsequences)
+
+def subsequences(string):
+  if(len(string)==0):
+    return ['']
+  firstChar = string[0]
+  restOfString = string[1:]
+  restOfCases = subsequences(restOfString)
+  allCases = []
+  for i in restOfCases:
+    allCases.append(i)
+    allCases.append(firstChar+i)
+  return allCases
+allStrings = subsequences("abc")
+print(allStrings)
+
+# ---------------------------------------------------------------------------- #
+#                  Print all possible words from phone digits                  #
+# ---------------------------------------------------------------------------- #
+class Solution:
+    def alphabetsPossible(self, number:int) -> str:
+        hashTable = ["", "", "abc", "def", "ghi", "jkl",
+             "mno", "pqrs", "tuv", "wxyz"]
+        return hashTable[number]
+    def letterCombinations(self, digits: str) -> List[str]:
+        if(len(digits)==0):
+            return []
+        else:
+            firstChar = digits[0]
+            restOfString = digits[1:]
+            casesPossibleExcludingFirstChar = self.letterCombinations(restOfString)
+            allCasesIncludingFirstChar = []
+            if(len(casesPossibleExcludingFirstChar)==0):
+                casesPossibleExcludingFirstChar.append('')
+            for i in casesPossibleExcludingFirstChar:
+                stringAtThatNumber = self.alphabetsPossible(int(firstChar))
+                for j in stringAtThatNumber:
+                    newCase = j+i
+                    allCasesIncludingFirstChar.append(newCase)
+            return allCasesIncludingFirstChar
