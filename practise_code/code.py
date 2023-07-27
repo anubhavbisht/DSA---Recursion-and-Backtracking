@@ -189,6 +189,9 @@ print(allStrings)
 # ---------------------------------------------------------------------------- #
 #                  Print all possible words from phone digits                  #
 # ---------------------------------------------------------------------------- #
+# ---------------------------------------------------------------------------- #
+#     https://leetcode.com/problems/letter-combinations-of-a-phone-number/     #
+# ---------------------------------------------------------------------------- #
 class Solution:
     def alphabetsPossible(self, number:int) -> str:
         hashTable = ["", "", "abc", "def", "ghi", "jkl",
@@ -210,3 +213,44 @@ class Solution:
                     newCase = j+i
                     allCasesIncludingFirstChar.append(newCase)
             return allCasesIncludingFirstChar
+
+# ---------------------------------------------------------------------------- #
+#                                Climbing Stairs                               #
+# ---------------------------------------------------------------------------- #
+def stairPath(numberOfStairs):
+  if(numberOfStairs==0):
+    return []
+  else:
+    numberOfPathsPossibleFromThatStair = []
+    if(numberOfStairs-3 <= 0):
+      maxDepth = 0
+    else:
+      maxDepth = numberOfStairs-3
+    for i in range (numberOfStairs-1,maxDepth-1,-1):
+      casesPossibleFromLowerStair = stairPath(i)
+      if(len(casesPossibleFromLowerStair)==0):
+        numberOfPathsPossibleFromThatStair.append(str(numberOfStairs))
+      else:
+        for j in casesPossibleFromLowerStair:
+          numberOfPathsPossibleFromThatStair.append(str(numberOfStairs-i)+j)
+    return numberOfPathsPossibleFromThatStair
+print(stairPath(7))
+
+def stairPath(numberOfStairs):
+  if(numberOfStairs==0):
+    return ['']
+  if(numberOfStairs<0):
+    return []
+  else:
+    numberOfPathsPossibleFromThatStair = []
+    path1 = stairPath(numberOfStairs-1)
+    path2 = stairPath(numberOfStairs-2)
+    path3 = stairPath(numberOfStairs-3)
+    for i in path1:
+      numberOfPathsPossibleFromThatStair.append('1'+i)
+    for i in path2:
+      numberOfPathsPossibleFromThatStair.append('2'+i)
+    for i in path3:
+      numberOfPathsPossibleFromThatStair.append('3'+i)
+    return numberOfPathsPossibleFromThatStair
+print(stairPath(0))
