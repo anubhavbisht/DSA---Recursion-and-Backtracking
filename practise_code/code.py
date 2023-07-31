@@ -254,3 +254,74 @@ def stairPath(numberOfStairs):
       numberOfPathsPossibleFromThatStair.append('3'+i)
     return numberOfPathsPossibleFromThatStair
 print(stairPath(0))
+
+# ---------------------------------------------------------------------------- #
+#                                get maze paths                                #
+# ---------------------------------------------------------------------------- #
+def getMazePaths(sourceCol,sourceRow,destinationCol,destinationRow):
+  if(sourceCol==destinationCol and sourceRow==destinationRow):
+    return []
+  else:
+    pathPossibleFromCurrentLocation = []
+    if(sourceCol+1<=destinationCol):
+      moveOneColumn = getMazePaths(sourceCol+1,sourceRow,destinationCol,destinationRow)
+      if(len(moveOneColumn)==0):
+        pathPossibleFromCurrentLocation.append('h')
+      else:
+        for i in moveOneColumn:
+          pathPossibleFromCurrentLocation.append('h'+i)
+    if(sourceRow+1<=destinationRow):
+      moveOneRow = getMazePaths(sourceCol,sourceRow+1,destinationCol,destinationRow)
+      if(len(moveOneRow)==0):
+        pathPossibleFromCurrentLocation.append('v')
+      else:
+        for i in moveOneRow:
+          pathPossibleFromCurrentLocation.append('v'+i)
+    return pathPossibleFromCurrentLocation
+paths = getMazePaths(1,1,3,3)
+print(paths)
+
+# ---------------------------------------------------------------------------- #
+#           Maze paths with jumps(vertically,diagnally,,horizontally)          #
+# ---------------------------------------------------------------------------- #
+def getMazePaths(sourceCol,sourceRow,destinationCol,destinationRow):
+  if(sourceCol==destinationCol and sourceRow==destinationRow):
+    return []
+  else:
+    pathPossibleFromCurrentLocation = []
+    ##horizonatlly
+    for i in range(1,destinationCol):
+      if(sourceCol+i<=destinationCol):
+        moveColumnByIth = getMazePaths(sourceCol+i,sourceRow,destinationCol,destinationRow)
+        if(len(moveColumnByIth)==0):
+          pathPossibleFromCurrentLocation.append('h'+str(i))
+        else:
+          for j in moveColumnByIth:
+            pathPossibleFromCurrentLocation.append('h'+str(i)+j)
+      else:
+        break        
+    ##vertically
+    for i in range(1,destinationRow):
+      if(sourceRow+i<=destinationRow):
+        moveRowByIth = getMazePaths(sourceCol,sourceRow+i,destinationCol,destinationRow)
+        if(len(moveRowByIth)==0):
+          pathPossibleFromCurrentLocation.append('v'+str(i))
+        else:
+          for j in moveRowByIth:
+            pathPossibleFromCurrentLocation.append('v'+str(i)+j)
+      else:
+        break
+    ##diagonally
+    for i in range(1,min(destinationCol,destinationRow)):
+      if(sourceRow+i<=destinationRow and sourceCol+i<=destinationCol):
+        moveDiagonallyByIth = getMazePaths(sourceCol+i,sourceRow+i,destinationCol,destinationRow)
+        if(len(moveDiagonallyByIth)==0):
+          pathPossibleFromCurrentLocation.append('d'+str(i))
+        else:
+          for j in moveDiagonallyByIth:
+            pathPossibleFromCurrentLocation.append('d'+str(i)+j)
+      else:
+        break
+    return pathPossibleFromCurrentLocation
+paths = getMazePaths(1,1,3,3)
+print(paths)
