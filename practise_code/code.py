@@ -340,3 +340,24 @@ def printSubsequences(string,substring):
     printSubsequences(restOfString,substring)
 parentString = 'abc'
 printSubsequences(parentString,'')
+
+# ---------------------------------------------------------------------------- #
+#                           print keypad combinations                          #
+# ---------------------------------------------------------------------------- #
+def alphabetsPossible(number):
+  hashTable = ["", "", "abc", "def", "ghi", "jkl",
+       "mno", "pqrs", "tuv", "wxyz"]
+  return hashTable[number]
+def keypadCombinations(question,answer):
+  if(len(question)==0):
+      print(answer)
+      return
+  else:
+      firstDigit = question[0]
+      restOfMobileNumber = question[1:]
+      charactersPossibleByFirstDigit = alphabetsPossible(int(firstChar))
+      for j in charactersPossibleByFirstDigit:
+        answer+=j
+        keypadCombinations(restOfMobileNumber,answer)  
+parentString = '23'
+keypadCombinations(parentString,'')
