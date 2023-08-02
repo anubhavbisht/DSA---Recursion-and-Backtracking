@@ -30,20 +30,6 @@ def decreasingIncreasingNumber(x):
 decreasingIncreasingNumber(5)
 
 # ---------------------------------------------------------------------------- #
-#                              print subsequences                              #
-# ---------------------------------------------------------------------------- #
-def printSubsequences(string,substring):
-  if(len(string)==0):
-    print(substring)
-    return
-  else:
-    firstCharacter = string[0]
-    restOfString = string[1:]
-    printSubsequences(restOfString,substring+firstCharacter)
-    printSubsequences(restOfString,substring)
-parentString = 'abc'
-printSubsequences(parentString,'')
-# ---------------------------------------------------------------------------- #
 #                             Factorial of a number                            #
 # ---------------------------------------------------------------------------- #
 def factorial(x):
