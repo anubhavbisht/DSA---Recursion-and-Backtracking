@@ -30,6 +30,20 @@ def decreasingIncreasingNumber(x):
 decreasingIncreasingNumber(5)
 
 # ---------------------------------------------------------------------------- #
+#                              print subsequences                              #
+# ---------------------------------------------------------------------------- #
+def printSubsequences(string,substring):
+  if(len(string)==0):
+    print(substring)
+    return
+  else:
+    firstCharacter = string[0]
+    restOfString = string[1:]
+    printSubsequences(restOfString,substring+firstCharacter)
+    printSubsequences(restOfString,substring)
+parentString = 'abc'
+printSubsequences(parentString,'')
+# ---------------------------------------------------------------------------- #
 #                             Factorial of a number                            #
 # ---------------------------------------------------------------------------- #
 def factorial(x):
@@ -325,3 +339,18 @@ def getMazePaths(sourceCol,sourceRow,destinationCol,destinationRow):
     return pathPossibleFromCurrentLocation
 paths = getMazePaths(1,1,3,3)
 print(paths)
+
+# ---------------------------------------------------------------------------- #
+#                              print subsequences                              #
+# ---------------------------------------------------------------------------- #
+def printSubsequences(string,substring):
+  if(len(string)==0):
+    print(substring)
+    return
+  else:
+    firstCharacter = string[0]
+    restOfString = string[1:]
+    printSubsequences(restOfString,substring+firstCharacter)
+    printSubsequences(restOfString,substring)
+parentString = 'abc'
+printSubsequences(parentString,'')
