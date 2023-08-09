@@ -361,3 +361,34 @@ def keypadCombinations(question,answer):
         keypadCombinations(restOfMobileNumber,answer)  
 parentString = '23'
 keypadCombinations(parentString,'')
+
+# ---------------------------------------------------------------------------- #
+#                               print stair path                               #
+# ---------------------------------------------------------------------------- #
+def stairPaths(numberOfStairs,path):
+  if(numberOfStairs==0):
+      print(path)
+      return
+  else:
+      if(numberOfStairs-1)>=0:
+        stairPaths(numberOfStairs-1,path+'1')
+      if(numberOfStairs-2)>=0:
+        stairPaths(numberOfStairs-2,path+'2')
+      if(numberOfStairs-3)>=0:
+        stairPaths(numberOfStairs-3,path+'3')
+parentStep = 4
+stairPaths(parentStep,'')
+      
+# ---------------------------------------------------------------------------- #
+#                               print maze paths                               #
+# ---------------------------------------------------------------------------- #
+def mazePaths(sourceCol,sourceRow,destinationCol,destinationRow,path):
+  if(sourceCol==destinationCol and sourceRow==destinationRow):
+      print(path)
+      return
+  else:
+      if(sourceCol+1<=destinationCol):
+        mazePaths(sourceCol+1,sourceRow,destinationCol,destinationRow,path+'h')
+      if(sourceRow+1<=destinationRow):
+        mazePaths(sourceCol,sourceRow+1,destinationCol,destinationRow,path+'v')
+mazePaths(1,1,4,4,'')
