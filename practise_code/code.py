@@ -326,4 +326,69 @@ def getMazePaths(sourceCol,sourceRow,destinationCol,destinationRow):
 paths = getMazePaths(1,1,3,3)
 print(paths)
         
+# ---------------------------------------------------------------------------- #
+#                              print subsequences                              #
+# ---------------------------------------------------------------------------- #
+def printSubsequences(string,substring):
+  if(len(string)==0):
+    print(substring)
+    return
+  else:
+    firstCharacter = string[0]
+    restOfString = string[1:]
+    printSubsequences(restOfString,substring+firstCharacter)
+    printSubsequences(restOfString,substring)
+parentString = 'abc'
+printSubsequences(parentString,'')
+
+# ---------------------------------------------------------------------------- #
+#                           print keypad combinations                          #
+# ---------------------------------------------------------------------------- #
+def alphabetsPossible(number):
+  hashTable = ["", "", "abc", "def", "ghi", "jkl",
+       "mno", "pqrs", "tuv", "wxyz"]
+  return hashTable[number]
+def keypadCombinations(question,answer):
+  if(len(question)==0):
+      print(answer)
+      return
+  else:
+      firstDigit = question[0]
+      restOfMobileNumber = question[1:]
+      charactersPossibleByFirstDigit = alphabetsPossible(int(firstChar))
+      for j in charactersPossibleByFirstDigit:
+        answer+=j
+        keypadCombinations(restOfMobileNumber,answer)  
+parentString = '23'
+keypadCombinations(parentString,'')
+
+# ---------------------------------------------------------------------------- #
+#                               print stair path                               #
+# ---------------------------------------------------------------------------- #
+def stairPaths(numberOfStairs,path):
+  if(numberOfStairs==0):
+      print(path)
+      return
+  else:
+      if(numberOfStairs-1)>=0:
+        stairPaths(numberOfStairs-1,path+'1')
+      if(numberOfStairs-2)>=0:
+        stairPaths(numberOfStairs-2,path+'2')
+      if(numberOfStairs-3)>=0:
+        stairPaths(numberOfStairs-3,path+'3')
+parentStep = 4
+stairPaths(parentStep,'')
       
+# ---------------------------------------------------------------------------- #
+#                               print maze paths                               #
+# ---------------------------------------------------------------------------- #
+def mazePaths(sourceCol,sourceRow,destinationCol,destinationRow,path):
+  if(sourceCol==destinationCol and sourceRow==destinationRow):
+      print(path)
+      return
+  else:
+      if(sourceCol+1<=destinationCol):
+        mazePaths(sourceCol+1,sourceRow,destinationCol,destinationRow,path+'h')
+      if(sourceRow+1<=destinationRow):
+        mazePaths(sourceCol,sourceRow+1,destinationCol,destinationRow,path+'v')
+mazePaths(1,1,4,4,'')
