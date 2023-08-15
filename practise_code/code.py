@@ -392,3 +392,87 @@ def mazePaths(sourceCol,sourceRow,destinationCol,destinationRow,path):
       if(sourceRow+1<=destinationRow):
         mazePaths(sourceCol,sourceRow+1,destinationCol,destinationRow,path+'v')
 mazePaths(1,1,4,4,'')
+
+# ---------------------------------------------------------------------------- #
+#        print maze paths with jumps(horizontally,diagonally,vertically)       #
+# ---------------------------------------------------------------------------- #
+def printMazePathsWithJumps(sourceCol,sourceRow,destinationCol,destinationRow,path):
+  if(sourceCol==destinationCol and sourceRow==destinationRow):
+    print('Path ->',path)
+    return
+  ##vertically
+  for i in range(1,destinationRow):
+    if(sourceRow+i<=destinationRow):
+      printMazePathsWithJumps(sourceCol,sourceRow+i,destinationCol,destinationRow,path+'v'+str(i))
+    else:
+      break
+  ##horizontally
+  for j in range(1,destinationCol):
+    if(sourceCol+j<=destinationCol):
+      printMazePathsWithJumps(sourceCol+j,sourceRow,destinationCol,destinationRow,path+'h'+str(j))
+    else:
+      break
+  ##diagonally
+  for k in range(1,min(destinationCol,destinationRow)):
+    if(sourceCol+k<=destinationCol and sourceRow+k<=destinationRow):
+      printMazePathsWithJumps(sourceCol+k,sourceRow+k,destinationCol,destinationRow,path+'d'+str(k))
+    else:
+      break
+printMazePathsWithJumps(1,1,4,4,'')
+
+# ---------------------------------------------------------------------------- #
+#                         print permutations of string                         #
+# ---------------------------------------------------------------------------- #
+def printPermutations(question,possibleAnswer):
+  if(len(question)==0):
+    print(possibleAnswer)
+    return
+  else:
+    for i in range(len(question)):
+      character = question[i]
+      leftString = question[0:i]
+      rightString = question[i+1:]
+      combinedString = leftString+rightString
+      printPermutations(combinedString, possibleAnswer+character)
+printPermutations('abc','')
+
+# ---------------------------------------------------------------------------- #
+#                                print encodings                               #
+# ---------------------------------------------------------------------------- #
+def printEncodings(question,possibleAnswer):
+  if(len(question)==0):
+    print(possibleAnswer)
+    return
+  else:
+    for i in range(len(question)):
+      leftString = question[0:i+1]
+      if(leftString[0]=='0'):
+        return 
+      if(int(leftString)<=26):
+        rightString = question[i+1:]
+        printEncodings(rightString,possibleAnswer+chr(int(leftString)+96))
+      else:
+        break
+printEncodings('303','')
+
+# ---------------------------------------------------------------------------- #
+#                                   floodfill                                  #
+# ---------------------------------------------------------------------------- #
+class Solution:
+    def ff(self,image,sr,sc,newColor,prevColor,row,col):
+        ##base case
+        if (sr<0 or sc<0 or sr>=row or sc>=col or image[sr][sc]!=prevColor or image[sr][sc]==newColor):
+            return
+        image[sr][sc]=newColor
+        self.ff(image,sr+1,sc,newColor,prevColor,row,col)
+        self.ff(image,sr-1,sc,newColor,prevColor,row,col)
+        self.ff(image,sr,sc+1,newColor,prevColor,row,col)
+        self.ff(image,sr,sc-1,newColor,prevColor,row,col)
+    
+    
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, newColor: int) -> List[List[int]]:
+        row=len(image)
+        col=len(image[0])
+        prevColor=image[sr][sc]
+        self.ff(image,sr,sc,newColor,prevColor,row,col)
+        return image
