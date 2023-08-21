@@ -325,7 +325,6 @@ def getMazePaths(sourceCol,sourceRow,destinationCol,destinationRow):
     return pathPossibleFromCurrentLocation
 paths = getMazePaths(1,1,3,3)
 print(paths)
-        
 # ---------------------------------------------------------------------------- #
 #                              print subsequences                              #
 # ---------------------------------------------------------------------------- #
