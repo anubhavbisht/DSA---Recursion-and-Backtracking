@@ -354,7 +354,7 @@ def keypadCombinations(question,answer):
   else:
       firstDigit = question[0]
       restOfMobileNumber = question[1:]
-      charactersPossibleByFirstDigit = alphabetsPossible(int(firstChar))
+      charactersPossibleByFirstDigit = alphabetsPossible(int(firstDigit))
       for j in charactersPossibleByFirstDigit:
         answer+=j
         keypadCombinations(restOfMobileNumber,answer)  
@@ -475,3 +475,129 @@ class Solution:
         prevColor=image[sr][sc]
         self.ff(image,sr,sc,newColor,prevColor,row,col)
         return image
+
+# ---------------------------------------------------------------------------- #
+#                               target sum subset                              #
+# ---------------------------------------------------------------------------- #
+def targetSumSubset(originalArray,targetSum,currentSubset,currentSum):
+  if(currentSum==targetSum):
+    print(currentSubset)
+    return
+  if(len(originalArray)==0 or currentSum>targetSum):
+    return
+  else:
+    firstElementOfArray = originalArray[0]
+    restOfArray = originalArray[1:]
+    # not firstelem contri
+    targetSumSubset(restOfArray,targetSum,currentSubset,currentSum)
+    # if firstelem contri
+    newSum = currentSum+firstElementOfArray
+    currentSubset.append(firstElementOfArray)
+    targetSumSubset(restOfArray,targetSum,currentSubset,newSum)
+    currentSubset.pop()
+
+array = [10,20,30,40,50]
+target = 60
+targetSumSubset(array,target,[],0)
+
+# ---------------------------------------------------------------------------- #
+#                                   n queens                                   #
+# ---------------------------------------------------------------------------- #
+def printBoard(nestedArray):
+  for i in nestedArray:
+    print(i)
+
+def checkValidPosition(checkList, column, row, totalLength):
+  startingRow = row
+  startingColumn = column
+  ##checking vertically
+  while (startingRow >= 0):
+    if (checkList[startingRow][column] == True):
+      return False
+    startingRow -= 1
+  startingRow = row
+  ##checking right diagonally
+  while (startingRow >= 0 and startingColumn >= 0
+         and startingColumn < totalLength):
+    if (checkList[startingRow][startingColumn] == True):
+      return False
+    startingRow -= 1
+    startingColumn += 1
+  startingRow = row
+  startingColumn = column
+  ##checking left diagonally
+  while (startingRow >= 0 and startingColumn >= 0):
+    if (checkList[startingRow][startingColumn] == True):
+      return False
+    startingRow -= 1
+    startingColumn -= 1
+  return True
+
+def queenSetup(chessBoard, checkList, currentRow, totalRows):
+  if (currentRow >= totalRows):
+    printBoard(chessBoard)
+    print('******************************')
+    print('******************************')
+  else:
+    #traversing column
+    for col in range(0, totalRows):
+      if (checkValidPosition(checkList, col, currentRow, totalRows)):
+        chessboard[currentRow][col] = 'Q'
+        checkList[currentRow][col] = True
+        queenSetup(chessBoard, checkList, currentRow + 1, totalRows)
+        chessboard[currentRow][col] = '|X|'
+        checkList[currentRow][col] = False
+
+print('This is n queen problem')
+n = int(input("Please enter value of n:"))
+chessboard = [['|X|' for i in range(n)] for j in range(n)]
+checkList = [[False for i in range(n)] for j in range(n)]
+print('We have {0}X{1} chessboard'.format(n, n))
+printBoard(chessboard)
+print('Now we have to place {0} queens into this board'.format(n))
+print('Given below are desired results')
+queenSetup(chessboard, checkList, 0, n)
+
+# ---------------------------------------------------------------------------- #
+#                                 knights tour                                 #
+# ---------------------------------------------------------------------------- #
+def knightTour(checkList, currentRow, currentColumn, totalSize,
+               movesTakenTillNow, squaresCovered):
+  if (squaresCovered == totalSize * totalSize):
+    print('Moves list', movesTakenTillNow)
+    print('******************************')
+    print('******************************')
+    return
+  else:
+    ## if your knight is at ith row and jth column you can take atmost 8 moves from that position
+    positions = [[-2, 1], [-1, 2], [1, 2], [2, 1], [2, -1], [1, -2], [-1, -2],
+                 [-2, -1]]
+    for i in positions:
+      posX = i[0]
+      posY = i[1]
+      if (currentRow + posX >= 0 and currentRow + posX < totalSize
+          and currentColumn + posY < totalSize and currentColumn + posY >= 0
+          and checkList[currentRow + posX][currentColumn + posY] == False):
+        checkList[currentRow + posX][currentColumn + posY] = True
+        squaresCovered += 1
+        move = '(X{},Y{}->>X{},Y{})'.format(currentRow, currentColumn,
+                                            currentRow + posX,
+                                            currentColumn + posY)
+        movesTakenTillNow.append(move)
+        knightTour(checkList, currentRow + posX, currentColumn + posY,
+                   totalSize, movesTakenTillNow, squaresCovered)
+        checkList[currentRow + posX][currentColumn + posY] = False
+        squaresCovered -= 1
+        movesTakenTillNow.pop()
+
+print('This is a knight tour problem')
+n = int(input("Please enter value of n:"))
+checkList = [[False for i in range(n)] for j in range(n)]
+print('We have {0}X{1} chessboard and knight has to cover {2} squares'.format(
+  n, n, n * n))
+print('Enter your knight starting position')
+startingX = int(input('Enter X coordinate:'))
+startingY = int(input('Enter Y coordinate:'))
+print('Given below are desired moves to fulfill this')
+checkList[startingX][startingY] = True
+knightTour(checkList, startingX, startingY, n, [], 0)
