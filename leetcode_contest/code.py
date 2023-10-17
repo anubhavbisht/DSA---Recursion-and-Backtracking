@@ -13,7 +13,7 @@ class Solution:
             depthOfCurrentElement = i.count('\t')
             lengthOfCurrentElement = 0
             if (len(fileStack) == 0 or depthOfCurrentElement == 0):
-                lengthOfCurrentElement = len(i) - depthOfCurrentElement 
+                lengthOfCurrentElement = len(i)
             else:
                 if(depthOfCurrentElement<=fileStack[-1][0]):
                     while(len(fileStack) > 0 and fileStack[-1][0]>=depthOfCurrentElement):
