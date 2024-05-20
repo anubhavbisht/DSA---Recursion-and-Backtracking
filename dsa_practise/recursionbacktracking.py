@@ -468,7 +468,6 @@ class Solution:
         self.ff(image,sr,sc+1,newColor,prevColor,row,col)
         self.ff(image,sr,sc-1,newColor,prevColor,row,col)
     
-    
     def floodFill(self, image: List[List[int]], sr: int, sc: int, newColor: int) -> List[List[int]]:
         row=len(image)
         col=len(image[0])
