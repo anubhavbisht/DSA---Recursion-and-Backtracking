@@ -254,3 +254,98 @@ push(15)
 minElement()
 pop()
 minElement()
+# ----------------------------- celebrity problem ---------------------------- #
+matrix = [[0,1,1,0],
+   [0,0,0,0],
+   [0,1,0,0],
+   [1,1,0,0]]
+
+def celebrityProblem():
+  stack = []
+  for i in range(len(matrix)):
+    stack.append(i)
+  while(len(stack)>1):
+    a = stack.pop()
+    b = stack.pop()
+    if matrix[a][b] == 1 and matrix[b][a]==0:
+      stack.append(b)
+    elif(matrix[b][a] == 1 and matrix[a][b]==0):
+      stack.append(a)
+  if(len(stack)==0):
+    return -1
+  probableCelebrity = stack.pop()
+  row=0
+  col=0
+  for i in range(len(matrix)):
+    row+=matrix[probableCelebrity][i]
+    col+=matrix[i][probableCelebrity]
+  if(row==0 and col==len(matrix)-1):
+    return probableCelebrity
+  else:
+    return -1
+result = celebrityProblem()
+print(result)
+# --------------------------- is valid parenthesis --------------------------- #
+def isValidParentheses(string):
+  stack = []
+  if(len(string)==0):
+    return True
+  for i in range(len(string)):
+    if string[i] in [')','}',']']:
+      if(len(stack)==0):
+        return False
+      else:
+        top = stack.pop()
+        if(string[i]==')' and top=='('):
+          continue
+        elif(string[i]=='}' and top=='{'):
+          continue
+        elif(string[i]==']' and top=='['):
+          continue
+        else:
+          return False
+    else:
+      stack.append(string[i])
+  return len(stack)==0
+
+s = "()[{}()]"
+if isValidParentheses(s):
+    print("True")
+else:
+    print("False")
+x = "([)]"
+if isValidParentheses(x):
+  print("True")
+else:
+  print("False")
+# ------------------------- longest valid parentheses ------------------------ #
+class Solution:
+    def longestValidParentheses(self, s: str) -> int:
+        if(len(s)==0):
+            return 0
+        stack = []
+        for i in range(len(s)):
+            char = s[i]
+            if(char==')'):
+                if(len(stack)>0):
+                    top = stack[-1][0]
+                    if(top=='('):
+                        stack.pop()
+                    else:
+                        stack.append([char,i])
+                else:
+                    stack.append([char,i])
+            else:
+                stack.append([char,i])
+        if(len(stack)==0):
+            return len(s)
+        invalidIndexes = [-1]
+        for j in range(len(stack)):
+            invalidIndexes.append(stack[j][1])
+        invalidIndexes.append(len(s))
+        length = 0
+        for k in range(0,len(invalidIndexes)-1):
+            length = max(length,invalidIndexes[k+1]-invalidIndexes[k]-1)
+        return length
+      
+
