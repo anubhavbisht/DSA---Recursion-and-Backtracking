@@ -347,5 +347,69 @@ class Solution:
         for k in range(0,len(invalidIndexes)-1):
             length = max(length,invalidIndexes[k+1]-invalidIndexes[k]-1)
         return length
-      
+# ------------------------- iterative tower of hanoi ------------------------- #
+def moveDisk(fromRod, toRod, fromStack, toStack, move):
+  if len(fromStack) == 0:
+      fromStack.append(toStack.pop())
+      print(f"Step {move}::Move disk from {toRod} to {fromRod}")
+  elif len(toStack) == 0:
+      toStack.append(fromStack.pop())
+      print(f"Step {move}::Move disk from {fromRod} to {toRod}")
+  elif fromStack[-1] > toStack[-1]:
+      fromStack.append(toStack.pop())
+      print(f"Step {move}::Move disk from {toRod} to {fromRod}")
+  else:
+      toStack.append(fromStack.pop())
+      print(f"Step {move}::Move disk from {fromRod} to {toRod}")
+
+def towerOfHanoiIterative(numberOfDiscs, source, destination, helper):
+  totalMoves = 2 ** numberOfDiscs - 1
+  sourceStack = list(range(numberOfDiscs, 0, -1))
+  destinationStack = []
+  helperStack = []
+
+  mapping = {
+      source: sourceStack,
+      destination: destinationStack,
+      helper: helperStack
+  }
+
+  if numberOfDiscs % 2 == 0:
+      moveSeq = [(source, helper), (source, destination), (helper, destination)]
+  else:
+      moveSeq = [(source, destination), (source, helper), (helper, destination)]
+
+  for i in range(1, totalMoves + 1):
+      fromRod, toRod = moveSeq[(i - 1) % 3]
+      moveDisk(fromRod, toRod, mapping[fromRod], mapping[toRod], i)
+
+towerOfHanoiIterative(4, 's', 'd', 'h')
+# ----------------------- class implementation of stack ---------------------- #
+class Stack:
+
+  def __init__(self):
+    self.items = []
+
+  def isEmpty(self):
+    return self.items == []
+
+  def pop(self):
+    print('Popped element is', self.items.pop())
+    self.items.pop()
+
+  def push(self, item):
+    self.items.append(item)
+
+  def top(self):
+    print('Top of the stack is', self.items[-1])
+
+  def size(self):
+    print('Size of the stack is', len(self.items))
+
+
+stack = Stack()
+stack.push(1)
+stack.push(2)
+stack.pop()
+
 
